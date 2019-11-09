@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using frontend.Models;
 using frontend.Data;
 using Frontend.Models;
+using frontend.Services;
 using Microsoft.EntityFrameworkCore.Internal;
 
 namespace frontend.Controllers
@@ -15,10 +16,12 @@ namespace frontend.Controllers
     {
 
         private readonly ApplicationDbContext _context;
+        private IWineServices _wineServices;
 
-        public TiposController (ApplicationDbContext context)
+        public TiposController (ApplicationDbContext context, IWineServices wineServices)
         {
             _context = context;
+            _wineServices = wineServices;
         }
 
         // [Route("tipos/{idPais?}")]
@@ -39,11 +42,14 @@ namespace frontend.Controllers
             // IEnumerable<TipoVinho> listaTipos = _context.TiposVinho;
 
             ViewBag.ListaTipos = _context.TipoVinho;
+            var abc = _wineServices.teste().Result;
 
             IEnumerable<Vinho> vinhosFiltrados = 
                 _context.Vinhos.Where(x => x.TipoVinho.Id == idTipo || idTipo == 0).ToList();
 
             ViewBag.Vinhos = vinhosFiltrados;
+
+            ViewBag.abc = abc;
 
             return View();
         }

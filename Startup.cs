@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using frontend.Data;
+using frontend.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace frontend
@@ -43,6 +44,8 @@ namespace frontend
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddTransient<IWineServices, WineServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
